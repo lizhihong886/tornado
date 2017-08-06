@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #pag a.selected{  background-color: #0f03a9;  }
+        #pag a{
+            display: inline-block;
+            min-width:30px;
+            text-align: center;
+            background-color: #0254a2;
+            border:1px solid White;
+            text-decoration: none;
+            color:white;
+            padding:1px 6px 2px 6px;}
+    </style>
+</head>
+<body>
+<h1>提交数据</h1>
+<form action="/index/1" method="post">
+    <input type="text" name="username" placeholder="email">
+    <input type="text" name="email" placeholder="user">
+    <input type="submit" value="提交" >
+</form>
+<h1>显示数据</h1>
+<table>
+    <thead>
+    <tr>
+        <th>用户名</th>
+        <th>邮箱</th>
+    </tr>
+    </thead>
+    <tbody>
+    {%for item in list_info%}
+    <tr>
+        <td>{{item['username']}}</td>
+        <td>{{item['email']}}</td>
+    </tr>
+    {%end%}
+    </tbody>
+</table>
+<span id="pag">
+    {% raw pag %} <!--raw 以原始方式展示-->
+</span>
+
+</body>
+</html>

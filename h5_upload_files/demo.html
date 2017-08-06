@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{static_url('css/upload.css')}}">
+    <script src="{{static_url('js/upload.js')}}"></script>
+</head>
+<body>
+ <div class="container" draggable="true">
+            <div class="contr">
+            <div class="upload_form_cont">
+                <form id="upload_form" enctype="multipart/form-data" method="post" action="/upload">
+                    <div>
+                        <div><label for="image_file">Please select image file</label></div>
+                        <div><input type="file" name="image_file" id="image_file" onchange="fileSelected();" /></div>
+                    </div>
+                    <div>
+                        <input type="button" value="Upload" onclick="startUploading()" />
+                    </div>
+                    <div id="fileinfo">
+                        <div id="filename"></div>
+                        <div id="filesize"></div>
+                        <div id="filetype"></div>
+                        <div id="filedim"></div>
+                    </div>
+                    <div id="error">你的浏览器不支持FileReader对象,换一个浏览器吧！！！</div>
+                    <div id="error1">非图片类型！！！</div>
+                    <div id="error2">上传过程中出错了！！！</div>
+                    <div id="abort">上传已被终止！！！</div>
+                    <div id="warnsize">文件过大，无法为您上传!!!</div>
+
+                    <div id="progress_info">
+                        <div id="progress"></div>
+                        <div id="progress_percent">&nbsp;</div>
+                        <div class="clear_both"></div>
+                        <div>
+                            <div id="speed">&nbsp;</div>
+                            <div id="remaining">&nbsp;</div>
+                            <div id="b_transfered">&nbsp;</div>
+                            <div class="clear_both"></div>
+                        </div>
+                        <div id="upload_response"></div>
+                    </div>
+                </form>
+                <img id="preview" />
+            </div>
+        </div>
+  </div>
+</body>
+</html>

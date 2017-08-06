@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    <p>
+        <input type="button" onclick="Jsonp1();"  value='提交'/>
+    </p>
+
+    <p>
+        <input type="button" onclick="Jsonp2();" value='提交'/>
+    </p>
+
+    <script type="text/javascript" src="jquery-1.12.4.js"></script>
+    <script>
+//Jsonp原生方式实现跨域
+        function Jsonp1(){
+            var tag = document.createElement('script'); //动态添加一个script标签，利用其src属性实现跨域请求（get请求）
+            tag.src = "http://c2.com:8000/test/";
+            document.head.appendChild(tag);
+            document.head.removeChild(tag);
+        }
+//JSONP结合Ajax
+        function Jsonp2(){
+            $.ajax({
+                url: "http://c2.com:8000/test/",
+                type: 'GET',
+                dataType: 'JSONP',//dataType是指定按照JSOPN方式访问远程服务，其内部就会帮我们自动调用类似于Jsonp1的方式，从而实现跨域请求
+                jsonp:'callback',//通过url给服务程序端传参，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+                jsonpCallback:'func',//是实现跨域请求的时候定义回调函数用的，此时远程服务接受callback参数的值就不再是自动生成的回调名，而是func。一般情况下，可以不设置，由jQuery自动生成随机名称
+                //==>tag.src = http://c2.com:8000/test?callback=func
+                success: function(data, statusText, xmlHttpRequest){
+                    console.log(data);
+                }
+            })
+        }
+function func(){
+
+}
+    </script>
+</body>
+</html>
+

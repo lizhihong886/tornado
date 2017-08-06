@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+body{
+    margin: 0 auto;
+    font: 12px Tahoma,Verdana,Arial,Helvetica,"\5b8b\4f53",sans-serif;
+}
+.not-allow{
+    cursor: not-allowed !important;
+}
+.w {
+    width: 1016px;
+    margin: 0 auto;
+}
+.hide{
+    display: none !important;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+ /* 登陆注册对话框开始 */
+.account-dialog{
+    position: fixed;
+    width: 700px;
+    height: 375px;
+    left: 50%;
+    top: 50%;
+    margin-left: -350px;
+    margin-top: -250px;
+    z-index: 1001;
+    background-color: rgb(230, 236, 243);
+}
+.account-dialog .login{
+    width: 349px;
+    background-color: #ffffff;
+    height: 375px;
+    border-right: 1px solid #cbdcee;
+}
+.account-dialog .register .header,.account-dialog .login .header{
+    background: #e7ecf2;
+    padding: 0 10px;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+    color: #abb6d2;
+    position: relative;
+}
+
+
+.account-dialog .register .content .tips,.account-dialog .login .content .tips{
+    padding: 10px 0;
+    font-size: 14px;
+    color: #abb6d2;
+    cursor: pointer;
+    text-align: center;
+}
+.account-dialog .register .content .inp,.account-dialog .login .content .inp{
+    padding: 10px 0;
+    position: relative;
+}
+.account-dialog .register .content .inp .error,.account-dialog .login .content .inp .error{
+    font-size: 10px;
+    position: absolute;
+    color: #e4393c;
+    background: #FFEBEB;
+    border: 1px solid #ffbdbe;
+    z-index: 10;
+    height: 15px;
+    width: 208px;
+    line-height: 15px;
+    display: block;
+    overflow: hidden;
+}
+.account-dialog .register .content .inp input,.account-dialog .login .content .inp input{
+    width: 196px;
+    padding: 6px;
+    border: 1px solid #CDDDEF;
+}
+
+.account-dialog .login .content .error-msg,.account-dialog .register .content .error-msg{
+    color: red;
+    height: 14px;
+}
+.account-dialog .login .content .inp .check-code{
+    width: 117px;
+    padding: 6px;
+    border: 1px solid #CDDDEF;
+    display: inline-block;
+    margin-right: 3px;
+}
+.account-dialog .login .content .inp .check-img{
+    height: 29px;
+    width: 70px;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.account-dialog .register .content .inp .email-code{
+    width: 122px;
+    padding: 6px;
+    border: 1px solid #CDDDEF;
+}
+.account-dialog .register .content .inp .fetch-code{
+    display: inline-block;
+    background-color: #336699;
+    height: 29px;
+    line-height: 29px;
+    padding: 0 5px;
+    color: #ffffff;
+    text-decoration: none;
+}
+.account-dialog .register .content .inp .fetch-code.sending{
+    cursor: not-allowed;
+    background-color: #a3a3a1 !important
+}
+.account-dialog .register .content .inp .submit,.account-dialog .login .content .inp .submit{
+    width: 95px;
+    height: 31px;
+    line-height: 31px;
+    margin-top: 5px;
+    background-color: #336699;
+    color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-block;
+}
+.account-dialog .login .content .extra{
+    padding-bottom: 10px;
+}
+.account-dialog .login .content .extra a{
+    color: #369;
+}
+.account-dialog .register .header .dialog-close{
+    position: absolute;
+    right: 10px;
+    top: 1px;
+    color: #99aecb;
+    cursor: pointer;
+}
+
+.account-dialog .register{
+    width: 350px;
+    background-color: #ffffff;
+    height: 375px;
+}
+    </style>
+</head>
+<body>
+<div id="accountDialog" class="account-dialog clearfix">
+        <div id="model_login" class="login left">
+            <div class="header">登陆</div>
+            <div class="content">
+                <div style="padding: 0 70px">
+                    <div class="tips">
+                        <span>用户名登陆</span>
+                        <span style="padding: 0 5px;">|</span>
+                        <span>邮箱登陆</span>
+                    </div>
+                    <div id="login_error_summary" class="error-msg">
+
+                    </div>
+                    <div class="inp">
+                        <input name="user" type="text" placeholder="请输入用户名或邮箱" />
+                    </div>
+                    <div class="inp">
+                        <input name="pwd" type="password" placeholder="请输入密码" />
+                    </div>
+                    <div class="inp clearfix">
+                        <input name="code" class="check-code" type="text" placeholder="请输入验证码" />
+                        <span>
+                            <img class="check-img" src="/check_code" alt="验证码" onclick="ChangeCode(this);">
+                        </span>
+
+                    </div>
+                    <div class="extra">
+                        <input type="checkbox" name="autoLogin" checked="checked" /> <span>一个月内自动登录</span>
+                        <a class="right" href="javascript:void(0);">忘记密码？</a>
+                    </div>
+                    <div class="inp">
+                        <div class="submit" onclick="SubmitLogin(this);">
+                            <span>登陆</span>
+                            <span class="hide">
+                                <img src="/images/loader.gif" style="height: 16px;width: 16px">
+                                <span>正在登陆</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function ChangeCode(ths) {
+                        ths.src += '?';
+                    }
+                </script>
+            </div>
+        </div>
+        <div id="model_register" class="register left">
+            <div class="header">
+                <span>注册</span>
+                <div class="dialog-close" onclick="CloseDialog('#accountDialog');">X</div>
+            </div>
+            <div class="content">
+                <div style="padding: 0 70px">
+                    <div class="tips">
+                        <span>输入注册信息</span>
+                    </div>
+                    <div id="register_error_summary" class="error-msg">
+
+                    </div>
+                    <div class="inp">
+                        <input name="username" type="text" placeholder="请输入用户名" />
+
+                    </div>
+                    <div class="inp">
+                        <input name="email" id="email" type="text" placeholder="请输入邮箱" />
+                    </div>
+                    <div class="inp">
+                        <input name="email_code" class="email-code" type="text" placeholder="请输入邮箱验证码" />
+                        <a id="fetch_code" class="fetch-code" href="javascript:void(0);">获取验证码</a>
+                    </div>
+                    <div class="inp">
+                        <input name="password" type="password" placeholder="请输入密码" />
+                    </div>
+                    <div class="inp">
+                        <div class="submit" onclick="SubmitRegister(this);">
+                            <span>注册</span>
+                            <span class="hide">
+                                <img src="/images/loader.gif" style="height: 16px;width: 16px">
+                                <span>正在注册</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    /*
+        点击登陆按钮
+        */
+        function SubmitLogin(ths){
+            $(ths).children(':eq(0)').addClass('hide');
+            $(ths).addClass('not-allow').children(':eq(1)').removeClass('hide');
+            // 发送Ajax请求
+            //完成之后
+            $('#model_login .inp .error').remove();
+
+            var post_dict = {};
+            $('#model_login input').each(function(){
+                post_dict[$(this).attr("name")] = $(this).val();
+            });
+
+            $.ajax({
+                url: '/login',
+                type: 'POST',
+                data: post_dict,
+                dataType: 'json',
+                success: function(arg){
+                    if(arg.status){
+                        window.location.href = '/index';
+                    }else{
+                        $.each(arg.message, function(k,v){
+                            //<span class="error">s</span>
+                            var tag = document.createElement('span');
+                            tag.className = 'error';
+                            tag.innerText = v;
+                            $('#model_login input[name="'+ k +'"]').after(tag);
+                        })
+                    }
+                }
+            });
+
+            $(ths).removeClass('not-allow').children(':eq(1)').addClass('hide');
+            $(ths).children(':eq(0)').removeClass('hide');
+        }
+
+        /*
+        点击注册按钮
+        */
+        function SubmitRegister(ths){
+            $('#register_error_summary').empty();
+            $('#model_register .inp .error').remove();
+
+            $(ths).children(':eq(0)').addClass('hide');
+            $(ths).addClass('not-allow').children(':eq(1)').removeClass('hide');
+
+            var post_dict = {};
+            $('#model_register input').each(function(){
+                post_dict[$(this).attr("name")] = $(this).val();
+            });
+
+            $.ajax({
+                url: '/register',
+                type: 'POST',
+                data: post_dict,
+                dataType: 'json',
+                success: function(arg){
+                    if(arg.status){
+                        window.location.href = '/index';
+                    }else{
+                        $.each(arg.message, function(k,v){
+                            //<span class="error">s</span>
+                            var tag = document.createElement('span');
+                            tag.className = 'error';
+                            tag.innerText = v;
+                            $('#model_register input[name="'+ k +'"]').after(tag);
+                        })
+                    }
+                }
+            });
+
+            $(ths).removeClass('not-allow').children(':eq(1)').addClass('hide');
+            $(ths).children(':eq(0)').removeClass('hide');
+        }
+</script>
+
+</body>
+</html>

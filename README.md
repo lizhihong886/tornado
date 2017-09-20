@@ -1,1 +1,8 @@
 # tornado
+由于tornado是轻量级web框架，并没有如大而全的Django那样拥有众多内置的组件可以使用
+以上这些为本人基于tornado框架开发的一些组件。
+如：ajax基于tornado的跨域请求、
+自定义分页、
+自定义表单验证、
+自定义验证码
+还有就是牛逼的session组件，既可以存放与cache中又可以存放于memcache和redis中
